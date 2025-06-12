@@ -41,10 +41,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1769337597633466026}
   - component: {fileID: 4476035659836334466}
-  - component: {fileID: 7025144524826676391}
   - component: {fileID: -2099419872621363940}
   - component: {fileID: 4591424087595740463}
   - component: {fileID: -8832786495262870}
+  - component: {fileID: 723089137674249532}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Arrow
@@ -83,22 +83,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigid: {fileID: -2099419872621363940}
---- !u!114 &7025144524826676391
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769337597633466025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abf647e0b2353734793f754792a47159, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  returnPosition: {fileID: 0}
-  returnPool: {fileID: 0}
-  rigid: {fileID: -2099419872621363940}
-  returnTime: 5
 --- !u!54 &-2099419872621363940
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -192,7 +176,19 @@ MonoBehaviour:
         m_CallState: 2
   m_SelectExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4476035659836334466}
+        m_TargetAssemblyTypeName: ArrowGrab, Assembly-CSharp
+        m_MethodName: ArrowUseable
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstFocusEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -312,6 +308,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.027062565, y: 0.025297195, z: 0.52699393}
   m_Center: {x: -0.00052823126, y: -0.00049702823, z: 0.025974423}
+--- !u!114 &723089137674249532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769337597633466025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf013e1b76de69a4a9740180926a427b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigid: {fileID: -2099419872621363940}
+  returnTime: 5
 --- !u!1 &1769337598482281027
 GameObject:
   m_ObjectHideFlags: 0
