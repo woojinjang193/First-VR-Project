@@ -12,8 +12,8 @@ public class ArrowGrab : MonoBehaviour
     }
     public void ArrowUseable()
     {
-        Debug.Log("화살잡음");
-        Debug.Log(rigid);
+      // Debug.Log("화살잡음");
+      // Debug.Log(rigid);
         rigid.isKinematic = false;
     }
 

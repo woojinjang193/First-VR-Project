@@ -10,6 +10,13 @@ public class Arrow : MonoBehaviour
     [SerializeField]  private float returnTime = 5f;
 
 
+    public bool isLoaded = false;
+    private bool isReturned = false;
+
+    private void OnEnable()
+    {
+        isReturned = false;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log($"충돌한 태그: {collision.collider.tag}");
@@ -22,14 +29,42 @@ public class Arrow : MonoBehaviour
         else
         {
             rigid.isKinematic = true;
-            Invoke("ReturnAfterCollision", returnTime);
+            Invoke("ArrowReturnPool", returnTime);
 
         }
 
     }
 
-    private void ReturnAfterCollision()
+    private void OnTriggerEnter(Collider other)
     {
-        Pool.Release(this.gameObject);
+        if (isLoaded)
+        {
+            return;
+        }
+
+        if (other.CompareTag("PullingPoint"))
+        {
+            Debug.Log("장전");
+            isLoaded = true;
+            GameManager.instance.ArrowLoad();
+            ArrowReturnPool();
+        }
+
+        
+    }
+
+    public void ArrowReturnPool()
+    {
+        if (isReturned)
+        {
+            return;
+        }
+
+        isReturned = true;
+
+        if (Pool != null && gameObject != null)
+        {
+            Pool.Release(this.gameObject);
+        }
     }
 }

@@ -40,11 +40,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1769337597633466026}
-  - component: {fileID: 4476035659836334466}
   - component: {fileID: -2099419872621363940}
   - component: {fileID: 4591424087595740463}
   - component: {fileID: -8832786495262870}
   - component: {fileID: 723089137674249532}
+  - component: {fileID: 590176165604268343}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Arrow
@@ -68,21 +68,9 @@ Transform:
   - {fileID: 296237346132574781}
   - {fileID: 1769337598482281036}
   - {fileID: 1480292641357123985}
+  - {fileID: 7142193354629640269}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4476035659836334466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1769337597633466025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd1e47d6951b6a64c88bd81f05916bba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigid: {fileID: -2099419872621363940}
 --- !u!54 &-2099419872621363940
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -162,7 +150,7 @@ MonoBehaviour:
   m_SelectEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4476035659836334466}
+      - m_Target: {fileID: 590176165604268343}
         m_TargetAssemblyTypeName: ArrowGrab, Assembly-CSharp
         m_MethodName: ArrowUseable
         m_Mode: 1
@@ -177,7 +165,7 @@ MonoBehaviour:
   m_SelectExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4476035659836334466}
+      - m_Target: {fileID: 590176165604268343}
         m_TargetAssemblyTypeName: ArrowGrab, Assembly-CSharp
         m_MethodName: ArrowUseable
         m_Mode: 1
@@ -322,6 +310,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigid: {fileID: -2099419872621363940}
   returnTime: 5
+  isLoaded: 0
+--- !u!114 &590176165604268343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769337597633466025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd1e47d6951b6a64c88bd81f05916bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigid: {fileID: -2099419872621363940}
 --- !u!1 &1769337598482281027
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,6 +377,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.018525332, y: 0.024298385, z: 0.055790126}
   m_Center: {x: -0.0005773157, y: -0.000000007450581, z: 0.026612878}
+--- !u!1 &5839023055664288072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7142193354629640269}
+  - component: {fileID: 5315592945536182847}
+  m_Layer: 0
+  m_Name: LoadPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7142193354629640269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839023055664288072}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.232}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1769337597633466026}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5315592945536182847
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5839023055664288072}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.1275929, y: 0.042122215, z: 0.1}
+  m_Center: {x: 0.0010095015, y: -0.00067299604, z: 0}
 --- !u!1001 &258617463687783894
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -44,8 +44,10 @@ public class SwitchToArrow : MonoBehaviour
 
         Transform handTransform = args.interactorObject.transform;
 
-        GameObject arrow = Instantiate(ArrowPrefab, handTransform.position, handTransform.rotation); //화살 생성
-
+        // GameObject arrow = Instantiate(ArrowPrefab, handTransform.position, handTransform.rotation); //화살 생성
+        GameObject arrow = ObjectPoolManager.instance.Pool.Get(); //풀에서 화살 꺼냄
+        arrow.transform.position = handTransform.position;        
+        arrow.transform.rotation = handTransform.rotation;        
 
         XRGrabInteractable arrowGrab = arrow.GetComponent<XRGrabInteractable>();  //화살정보
         IXRSelectInteractor interactorInterface = args.interactorObject;
