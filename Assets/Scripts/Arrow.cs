@@ -25,6 +25,9 @@ public class Arrow : MonoBehaviour
         if (collision.collider.CompareTag("Monster") || collision.collider.CompareTag("GameOBJ"))
         {
             rigid.isKinematic = true;
+            //rigid.velocity = Vector3.zero;
+            transform.SetParent(collision.transform);
+            //transform.localScale = new Vector3(1f, 1f, 1f); //크기 고정
             Invoke("ArrowReturnPool", returnTime);
    
         }
