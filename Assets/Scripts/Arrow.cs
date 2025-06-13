@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UIElements.Experimental;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Arrow : MonoBehaviour
 {
-    public IObjectPool<GameObject> Pool { get; set; }
+   // public IObjectPool<GameObject> Pool { get; set; }
     [SerializeField] Rigidbody rigid;
     [SerializeField]  private float returnTime = 5f;
+    //public bool isFired = false;
 
-
-    public bool isLoaded = false;
     private bool isReturned = false;
 
     private void OnEnable()
@@ -20,51 +21,53 @@ public class Arrow : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //Debug.Log($"충돌한 태그: {collision.collider.tag}");
-
-        if (collision.collider.CompareTag("Player") || collision.collider.CompareTag("Arrow") || collision.collider.CompareTag("ArrowTip"))
-        {
-            return;
-        }
-
-        else
+   
+        if (collision.collider.CompareTag("Monster") || collision.collider.CompareTag("GameOBJ"))
         {
             rigid.isKinematic = true;
             Invoke("ArrowReturnPool", returnTime);
-
+   
         }
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (isLoaded)
+        else
         {
             return;
         }
+   
+    }
 
-        if (other.CompareTag("PullingPoint"))
+    // private void Update()
+    // {
+    //  
+    //       if (GameManager.instance.isLoaded)
+    //      {
+    //          Debug.Log("장전완료 리턴함");
+    //          ArrowReturnPool();
+    //          
+    //      }
+    // }
+
+    private void Update()
+    {
+        if (rigid.velocity.magnitude > 1) 
         {
-            Debug.Log("장전");
-            isLoaded = true;
-            GameManager.instance.ArrowLoad();
-            ArrowReturnPool();
+            transform.forward = rigid.velocity.normalized; 
         }
-
-        
     }
 
     public void ArrowReturnPool()
     {
         if (isReturned)
         {
+            Debug.Log("리턴됨");
             return;
+            
         }
-
-        isReturned = true;
-
-        if (Pool != null && gameObject != null)
-        {
-            Pool.Release(this.gameObject);
-        }
+            isReturned = true;
+            ObjectPoolManager.instance.ReturnToPool(this.gameObject);
+            Debug.Log("풀로 리턴됨");
     }
+
+    //화살 자연스럽게 날아가게하기
+
+
 }

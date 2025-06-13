@@ -12,10 +12,6 @@ public class SwitchToArrow : MonoBehaviour
 
     Vector3 playerBack;
 
-    private void Start()
-    {
- 
-    }
     private void OnEnable()
     {
         cubeGrab.selectEntered.AddListener(OnCubeGrabbed);
@@ -51,7 +47,8 @@ public class SwitchToArrow : MonoBehaviour
 
         XRGrabInteractable arrowGrab = arrow.GetComponent<XRGrabInteractable>();  //화살정보
         IXRSelectInteractor interactorInterface = args.interactorObject;
-        XRBaseInteractor interactor = interactorInterface.transform.GetComponent<XRBaseInteractor>();
+        XRBaseInteractor interactor = interactorInterface.transform.GetComponent<XRBaseInteractor>(); //손 정보 
+        //Debug.Log("인터렉터이름: " + interactor.name);
 
         interactor.interactionManager.SelectEnter(interactor as IXRSelectInteractor, arrowGrab as IXRSelectInteractable);
         // interactionManager.SelectEnter(누가, 무엇을) 잡게함

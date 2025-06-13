@@ -33,8 +33,8 @@ public class ObjectPoolManager : MonoBehaviour
 
         for (int i = 0; i < defaultCapacity; i++)
         {
-            Arrow bullet = CreatePooledItem().GetComponent<Arrow>();
-            bullet.Pool.Release(bullet.gameObject);
+            GameObject arrow = CreatePooledItem(); 
+            Pool.Release(arrow);
         }
     }
 
@@ -42,7 +42,6 @@ public class ObjectPoolManager : MonoBehaviour
     private GameObject CreatePooledItem()
     {
         GameObject poolGo = Instantiate(Prefab);
-        poolGo.GetComponent<Arrow>().Pool = this.Pool;
         return poolGo;
     }
 
@@ -55,6 +54,7 @@ public class ObjectPoolManager : MonoBehaviour
     // ¹ÝÈ¯
     private void OnReturnedToPool(GameObject poolGo)
     {
+
         poolGo.SetActive(false);
     }
 
@@ -63,4 +63,15 @@ public class ObjectPoolManager : MonoBehaviour
     {
         Destroy(poolGo);
     }
+
+    public GameObject GetFromPool()
+    {
+        return Pool.Get();
+    }
+
+    public void ReturnToPool(GameObject obj)
+    {
+        Pool.Release(obj);
+    }
+
 }

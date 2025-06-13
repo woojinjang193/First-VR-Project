@@ -9,6 +9,10 @@ TagManager:
   - Arrow
   - PullingPoint
   - ArrowNoColider
+  - ArrowButtom
+  - PlayerHand
+  - GameOBJ
+  - Monster
   layers:
   - Default
   - TransparentFX
@@ -17,7 +21,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - GameOBJ
   - 
   - 
   - 
