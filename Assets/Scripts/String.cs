@@ -66,7 +66,7 @@ public class String : MonoBehaviour
     }
     private void OnReleased(SelectExitEventArgs args) //발사 함수
     {
-        if (currentPullAmount >= minPullToFire && GameManager.instance.isLoaded)
+        if (currentPullAmount >= minPullToFire && GameManager.instance.isLoaded)  //minPullToFire 만큼 당겨야 발동
         {
             GameManager.instance.ArrowFired();
             Fire();
@@ -83,16 +83,18 @@ public class String : MonoBehaviour
     private void Fire()
     {
 
-       GameObject arrowObj = ObjectPoolManager.instance.GetFromPool();  //풀에서 화살 가져옴
-       Arrow arrow = arrowObj.GetComponent<Arrow>();
-      
-       arrow.transform.position = firePoint.position;  //firePoint 위치에서 발사
-       arrow.transform.rotation = firePoint.rotation;
-      
-       Rigidbody rigid = arrow.GetComponent<Rigidbody>();
-        rigid.isKinematic = false;
-       rigid.velocity = firePoint.forward * (currentPullAmount * firePower) ;  // 당겨진양 * 파워
+        GameObject arrowObj = ObjectPoolManager.instance.GetFromPool();  //풀에서 화살 가져옴
+        Arrow arrow = arrowObj.GetComponent<Arrow>();
+        Rigidbody rigid = arrow.GetComponent<Rigidbody>();
+        rigid.isKinematic = false;  //키네마틱 비활성화
 
+        arrow.transform.position = firePoint.position;  //firePoint 위치에서 발사
+        arrow.transform.rotation = firePoint.rotation;
+      
+       
+       
+        rigid.velocity = firePoint.forward * (currentPullAmount * firePower) ;  // 당겨진양 * 파워
+ 
 
         Debug.Log("화살 발사");
     }

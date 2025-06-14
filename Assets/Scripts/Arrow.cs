@@ -24,10 +24,13 @@ public class Arrow : MonoBehaviour
    
         if (collision.collider.CompareTag("Monster") || collision.collider.CompareTag("GameOBJ"))
         {
-            rigid.isKinematic = true;
+            rigid.isKinematic = true;  //충돌시 멈춤
             //rigid.velocity = Vector3.zero;
-            transform.SetParent(collision.transform);
-            //transform.localScale = new Vector3(1f, 1f, 1f); //크기 고정
+
+            transform.SetParent(collision.transform, worldPositionStays: true);
+      
+            // transform.SetParent(collision.transform);  // 충돌한물체를 부모로 설정 (화살이 붙어있게 하기위함)
+            // transform.localScale = new Vector3(1f, 1f, 1f); //크기 고정
             Invoke("ArrowReturnPool", returnTime);
    
         }

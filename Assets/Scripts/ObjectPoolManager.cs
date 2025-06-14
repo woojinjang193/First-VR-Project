@@ -49,6 +49,10 @@ public class ObjectPoolManager : MonoBehaviour
     private void OnTakeFromPool(GameObject poolGo)
     {
         poolGo.SetActive(true);
+        poolGo.transform.localScale = Vector3.one;  //풀에서 꺼낼때 스케일 초기화
+        Rigidbody rigid = poolGo.GetComponent<Rigidbody>();  // 풀에서 꺼낼때 키네마틱 꺼줌
+        rigid.isKinematic = false;
+        
     }
 
     // 반환
