@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: -8832786495262870}
   - component: {fileID: 723089137674249532}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: FireArrow
   m_TagString: FireArrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,7 +297,7 @@ GameObject:
   - component: {fileID: 6026614170527596126}
   m_Layer: 0
   m_Name: Tip
-  m_TagString: ArrowTip
+  m_TagString: FireArrowTip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -387,7 +387,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.1275929, y: 0.042122215, z: 0.1}
   m_Center: {x: 0.0010095015, y: -0.00067299604, z: 0}

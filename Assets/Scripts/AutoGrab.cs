@@ -30,7 +30,7 @@ public class AutoGrab : MonoBehaviour
         {
             isArrowIn = true;
             arrow = other.GetComponentInParent<Arrow>();//////////////////
-            Debug.Log("화살 아래 충돌");
+            //Debug.Log("화살 아래 충돌");
         }
 
   
@@ -48,7 +48,7 @@ public class AutoGrab : MonoBehaviour
         if (other.CompareTag("ArrowButtom"))
         {
             isArrowIn = false;
-            Debug.Log("화살 아래 충돌해체");
+            //Debug.Log("화살 아래 충돌해체");
         }
     }
 

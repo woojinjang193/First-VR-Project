@@ -20,8 +20,7 @@ public class Arrow : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"[충돌] {collision.gameObject.name}");////////////////////////////////////////////
-
+        //Debug.Log("충돌:" + {collision.gameObject.name});
         if (collision.collider.CompareTag("Monster") || collision.collider.CompareTag("GameOBJ"))
         {
             rigid.isKinematic = true;  //충돌시 멈춤
@@ -64,13 +63,13 @@ public class Arrow : MonoBehaviour
         {
             ObjectPoolManager.instance.ArrowReset(this.gameObject);
             ObjectPoolManager.instance.ReturnFireArrow(this.gameObject);
-            Debug.Log("발사용 풀로 리턴됨");
+            //Debug.Log("발사용 풀로 리턴됨");
         }
         else if (CompareTag("LoadArrow")) //장전용이면 발사용 풀로 리턴
         {
             ObjectPoolManager.instance.ArrowReset(this.gameObject);
             ObjectPoolManager.instance.ReturnReloadArrow(this.gameObject);
-            Debug.Log("장전용 풀로 리턴됨");
+            //Debug.Log("장전용 풀로 리턴됨");
         }
 
         

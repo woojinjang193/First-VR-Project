@@ -70,7 +70,7 @@ public class String : MonoBehaviour
         {
             GameManager.instance.ArrowFired();
             Fire();
-            Debug.Log("화살 발사");
+            //Debug.Log("화살 발사");
            
         }
     
@@ -98,7 +98,7 @@ public class String : MonoBehaviour
     
        rigid.velocity = firePoint.forward * (currentPullAmount * firePower) ;  // 당겨진양 * 파워
      //rigid.AddForce(firePoint.forward * (currentPullAmount * firePower), ForceMode.Impulse);
-       Debug.Log("화살 발사");
+       //Debug.Log("화살 발사");
     
     
     }
