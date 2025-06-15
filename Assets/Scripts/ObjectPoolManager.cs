@@ -111,7 +111,10 @@ public class ObjectPoolManager : MonoBehaviour
        rigid.isKinematic = false; // 기네마틱 끔
        rigid.velocity = Vector3.zero; //이동 속도 초기화
        rigid.angularVelocity = Vector3.zero; // 회전 속도 초기화
-       Debug.Log($"화살 초기화 완료");
+        Collider arrowCollider = arrow.GetComponent<Collider>();
+        arrowCollider.enabled = true; // 콜라이더 다시 켜줌
+   
+        Debug.Log($"화살 초기화 완료");
    
    
    }

@@ -56,10 +56,7 @@ public class MonsterController : MonoBehaviour
         agent.SetDestination(castleGate.position); //플레이어 감지 안되면 다시 성문으로
         }
 
-        if(curHp <= 0) 
-        {
-            MonsterDie();
-        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -71,22 +68,33 @@ public class MonsterController : MonoBehaviour
             //Debug.Log("성문 도착 내브메쉬 멈춤");
         }
 
-        if( other.CompareTag("FireArrowTip"))  //충돌체가 화살촉일때
+        if (other.CompareTag("FireArrowTip"))
         {
             curHp -= takeDamage;
             Debug.Log("몬스터 체력:" + curHp);
+
+            if (curHp <= 0)
+            {
+                MonsterDie();
+            }
         }
 
-        if (other.CompareTag("LoadArrowTip"))  //충돌체가 화살촉일때
+        if (other.CompareTag("LoadArrowTip"))
         {
             curHp -= 1;
             Debug.Log("몬스터 체력:" + curHp);
+
+            if (curHp <= 0)
+            {
+                MonsterDie();
+            }
         }
     }
 
     private void MonsterDie()
     {
         Debug.Log("몬스터쥬금");
+        gameObject.SetActive(false);
     }
 
     private void OnDrawGizmos()
