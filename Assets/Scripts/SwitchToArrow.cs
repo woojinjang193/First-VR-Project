@@ -34,6 +34,7 @@ public class SwitchToArrow : MonoBehaviour
 
     private void OnCubeGrabbed(SelectEnterEventArgs args)
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.ArrowTaking); //화살 가져오는 소리 재생
         Debug.Log("활로 변경");
 
         cubeGrab.gameObject.SetActive(false);

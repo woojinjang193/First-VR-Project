@@ -59,6 +59,8 @@ public class AutoGrab : MonoBehaviour
           if ( isHandIn && isArrowIn && !GameManager.instance.isLoaded && canReloadAgain)
           {
               isArrowIn = false;
+              AudioManager.instance.PlaySfx(AudioManager.Sfx.ArrowLoading); //화살장전소리
+
               //Debug.Log("장전!");
               GameManager.instance.ArrowLoad();
 

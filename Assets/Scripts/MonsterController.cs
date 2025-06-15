@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class MonsterController : MonoBehaviour
 {
@@ -110,6 +112,7 @@ public class MonsterController : MonoBehaviour
         {
             curHp -= takeDamage;
             //Debug.Log("몬스터 체력:" + curHp);
+
 
             if (curHp <= 0)
             {

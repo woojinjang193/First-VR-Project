@@ -84,8 +84,9 @@ public class String : MonoBehaviour
 
     private void Fire()
     {
-    
-       GameObject arrowObj = ObjectPoolManager.instance.GetFireArrow();  //풀에서 화살 가져옴
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Shoot); // 활 발사 소리재생
+
+        GameObject arrowObj = ObjectPoolManager.instance.GetFireArrow();  //풀에서 화살 가져옴
     
        Arrow arrow = arrowObj.GetComponent<Arrow>();
        Rigidbody rigid = arrow.GetComponent<Rigidbody>();

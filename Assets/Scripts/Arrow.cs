@@ -12,6 +12,9 @@ public class Arrow : MonoBehaviour
     [SerializeField]  private float returnTime = 5f;
     //public bool isFired = false;
 
+    [SerializeField] private AudioSource audioSource;
+
+
     private bool isReturned = false;
 
     private void OnEnable()
@@ -23,6 +26,9 @@ public class Arrow : MonoBehaviour
         //Debug.Log("√Êµπ:" + {collision.gameObject.name});
         if (collision.collider.CompareTag("Monster") || collision.collider.CompareTag("GameOBJ"))
         {
+
+            audioSource.Play();
+
             rigid.isKinematic = true;  //√ÊµπΩ√ ∏ÿ√„
 
             Collider arrowcollider = GetComponent<Collider>();
