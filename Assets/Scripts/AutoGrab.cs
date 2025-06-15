@@ -62,8 +62,8 @@ public class AutoGrab : MonoBehaviour
               //Debug.Log("장전!");
               GameManager.instance.ArrowLoad();
 
-            //arrow.gameObject.SetActive(false);   // 화살 비활성화 
-            arrow.ArrowReturnPool(); //리턴
+              //arrow.gameObject.SetActive(false);   // 화살 비활성화 
+              arrow.ArrowReturnPool(); //리턴
 
             if (currentInteractor != null && pullingPointGrab != null)
               {

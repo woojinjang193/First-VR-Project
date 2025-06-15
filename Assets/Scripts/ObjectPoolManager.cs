@@ -5,77 +5,115 @@ using UnityEngine.Pool;
 
 public class ObjectPoolManager : MonoBehaviour
 {
-
     public static ObjectPoolManager instance;
+
+    public GameObject reloadArrowPrefab;
+    public GameObject fireArrowPrefab;
+
+    public IObjectPool<GameObject> ReloadArrowPool { get; private set; }
+    public IObjectPool<GameObject> FireArrowPool { get; private set; }
 
     public int defaultCapacity = 10;
     public int maxPoolSize = 15;
-    public GameObject Prefab;
-
-
-    public IObjectPool<GameObject> Pool { get; private set; }
 
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
+        {
             Destroy(this.gameObject);
-
+            return;
+        }
 
         Init();
     }
-
+    
     private void Init()
     {
-        Pool = new ObjectPool<GameObject>(CreatePooledItem, OnTakeFromPool, OnReturnedToPool,
+        ReloadArrowPool = new ObjectPool<GameObject>(CreateReloadArrow, OnTakeFromPool, OnReturnedToPool,
         OnDestroyPoolObject, true, defaultCapacity, maxPoolSize);
+
+        FireArrowPool = new ObjectPool<GameObject>(CreateFireArrow, OnTakeFromPool, OnReturnedToPool,
+        OnDestroyPoolObject, true, defaultCapacity, maxPoolSize);
+    
 
         for (int i = 0; i < defaultCapacity; i++)
         {
-            GameObject arrow = CreatePooledItem(); 
-            Pool.Release(arrow);
+            GameObject reloadArrow = CreateReloadArrow();
+            ReloadArrowPool.Release(reloadArrow);
+
+            GameObject fireArrow = CreateFireArrow();
+            FireArrowPool.Release(fireArrow);
         }
     }
-
+    
     // 생성
-    private GameObject CreatePooledItem()
+    private GameObject CreateReloadArrow()   //장전용화살 
     {
-        GameObject poolGo = Instantiate(Prefab);
-        return poolGo;
+        return Instantiate(reloadArrowPrefab);
+    }
+
+    private GameObject CreateFireArrow()    //발사용화살
+    {
+        return Instantiate(fireArrowPrefab);
     }
 
     // 사용
     private void OnTakeFromPool(GameObject poolGo)
     {
         poolGo.SetActive(true);
-        poolGo.transform.localScale = Vector3.one;  //풀에서 꺼낼때 스케일 초기화
-        Rigidbody rigid = poolGo.GetComponent<Rigidbody>();  // 풀에서 꺼낼때 키네마틱 꺼줌
-        rigid.isKinematic = false;
-        
+        //ArrowReset(poolGo);
     }
-
+    
     // 반환
     private void OnReturnedToPool(GameObject poolGo)
     {
-
+        //ArrowReset(poolGo);
         poolGo.SetActive(false);
     }
-
+    
     // 삭제
     private void OnDestroyPoolObject(GameObject poolGo)
     {
         Destroy(poolGo);
     }
 
-    public GameObject GetFromPool()
+    public GameObject GetReloadArrow()
     {
-        return Pool.Get();
+        return ReloadArrowPool.Get();
     }
 
-    public void ReturnToPool(GameObject obj)
+    public GameObject GetFireArrow()
     {
-        Pool.Release(obj);
+        return FireArrowPool.Get();
     }
+
+    public void ReturnReloadArrow(GameObject obj)
+    {
+        ReloadArrowPool.Release(obj);
+    }
+
+    public void ReturnFireArrow(GameObject obj)
+    {
+        FireArrowPool.Release(obj);
+    }
+
+
+   public void ArrowReset(GameObject arrow)  //화살 리셋
+   {
+       if (arrow == null) return;
+   
+       arrow.transform.SetParent(null);  //부모 해제
+       arrow.transform.localScale = Vector3.one;  // 스케일 초기화
+       arrow.transform.localRotation = Quaternion.identity;
+       Rigidbody rigid = arrow.GetComponent<Rigidbody>();
+       rigid.isKinematic = false; // 기네마틱 끔
+       rigid.velocity = Vector3.zero; //이동 속도 초기화
+       rigid.angularVelocity = Vector3.zero; // 회전 속도 초기화
+       Debug.Log($"화살 초기화 완료");
+   
+   
+   }
 
 }

@@ -5,8 +5,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class SwitchToArrow : MonoBehaviour
 {
-    [SerializeField] private GameObject ArrowPrefab;
-   // [SerializeField] private Transform spawnPosition;
+    //[SerializeField] private GameObject loadArrowPrefab;
+    // [SerializeField] private Transform spawnPosition;
     [SerializeField] private XRGrabInteractable cubeGrab;
     [SerializeField] private Transform playerBackTransform;
 
@@ -41,9 +41,9 @@ public class SwitchToArrow : MonoBehaviour
         Transform handTransform = args.interactorObject.transform;
 
         // GameObject arrow = Instantiate(ArrowPrefab, handTransform.position, handTransform.rotation); //화살 생성
-        GameObject arrow = ObjectPoolManager.instance.Pool.Get(); //풀에서 화살 꺼냄
-        arrow.transform.position = handTransform.position;        
-        arrow.transform.rotation = handTransform.rotation;        
+        GameObject arrow = ObjectPoolManager.instance.GetReloadArrow(); //풀에서 장전용화살 꺼냄
+        arrow.transform.position = handTransform.position;
+        arrow.transform.rotation = handTransform.rotation;
 
         XRGrabInteractable arrowGrab = arrow.GetComponent<XRGrabInteractable>();  //화살정보
         IXRSelectInteractor interactorInterface = args.interactorObject;
@@ -60,5 +60,5 @@ public class SwitchToArrow : MonoBehaviour
     private void CubeActivate()
     {
         cubeGrab.gameObject.SetActive(true);
-    }    
+    }
 }
