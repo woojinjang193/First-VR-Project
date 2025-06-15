@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 1769337598482281036}
   - component: {fileID: 6026614170527596126}
   m_Layer: 0
-  m_Name: Tip
+  m_Name: LoadArrowTip
   m_TagString: LoadArrowTip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

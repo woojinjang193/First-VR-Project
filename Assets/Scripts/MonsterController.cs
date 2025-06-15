@@ -15,7 +15,6 @@ public class MonsterController : MonoBehaviour
     private int curHp;
     [SerializeField] private int takeDamage;
 
-    private bool isChasingPlayer;
     private bool hasReachedToGate = false;
 
     private void Awake()
@@ -31,41 +30,48 @@ public class MonsterController : MonoBehaviour
 
     private void Update()
     {
-        if(hasReachedToGate || agent.isStopped)  //성문도달했을때, 내브메쉬스탑일때
+        if(hasReachedToGate)  //성문도달했을때
         {
             return;
         }
 
-        else
-        { 
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);  //플레이어와 거리 계산
-        
-        if (distanceToPlayer <= detectionRange && !hasReachedToGate)  //플레이어가 범위내에 들어오면
+        else  //성문 도달하기전
         {
-            if (!isChasingPlayer)  //플레이어를 이미 따라가는중이 아닐때
-            {
-                isChasingPlayer = true;
-                //Debug.Log("플레이어 감지");
-            }
-            agent.SetDestination(player.position);  //플레이어 추격 시작
-            //Debug.Log("플레이어로 타겟 변경");
-        }
-
-        else
-
-        agent.SetDestination(castleGate.position); //플레이어 감지 안되면 다시 성문으로
-        }
-
+            
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);  //플레이어와 거리 계산
         
+            if (distanceToPlayer <= detectionRange && !hasReachedToGate)  //플레이어가 범위내에 들어오면
+            {
+                   agent.SetDestination(player.position);  //플레이어 추격 시작
+                   Debug.Log("플레이어로 타겟 변경");
+
+                if (distanceToPlayer <= 2f)
+                {
+                    agent.isStopped = true;
+                    agent.velocity = Vector3.zero;
+                    Debug.Log("플레이어 앞에서 멈춤");
+
+                }
+            }
+            else
+                {
+                    agent.isStopped = false;
+                    //isChasingPlayer = false;
+                    agent.SetDestination(castleGate.position); //플레이어 감지 안되면 다시 성문으로
+                }
+            }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if(other.CompareTag("CastleGate"))
         {
+            Debug.Log("성문 도착 내브메쉬 멈춤");
             hasReachedToGate = true;
             agent.isStopped = true;  //성문 도달시 멈춤
-            //Debug.Log("성문 도착 내브메쉬 멈춤");
+            agent.velocity = Vector3.zero;
+            
         }
 
         if (other.CompareTag("FireArrowTip"))
@@ -82,19 +88,21 @@ public class MonsterController : MonoBehaviour
         if (other.CompareTag("LoadArrowTip"))
         {
             curHp -= 1;
-            Debug.Log("몬스터 체력:" + curHp);
+            //Debug.Log("충돌:" + other.name);
+            Debug.Log("몬스터 체력:" + curHp);  //두번호출되는 이유 찾아야함
 
             if (curHp <= 0)
             {
                 MonsterDie();
             }
         }
+        
     }
 
     private void MonsterDie()
     {
         Debug.Log("몬스터쥬금");
-        gameObject.SetActive(false);
+        
     }
 
     private void OnDrawGizmos()
