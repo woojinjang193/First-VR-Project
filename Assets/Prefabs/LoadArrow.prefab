@@ -45,8 +45,8 @@ GameObject:
   - component: {fileID: -8832786495262870}
   - component: {fileID: 723089137674249532}
   m_Layer: 0
-  m_Name: Arrow
-  m_TagString: FireArrow
+  m_Name: LoadArrow
+  m_TagString: LoadArrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

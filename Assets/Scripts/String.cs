@@ -20,7 +20,7 @@ public class String : MonoBehaviour
     [SerializeField] private float minPullToFire = 0.1f;  // 이 이상 당겨야 발사 처리
     //[SerializeField] private Arrow arrow;
     [SerializeField] private Transform firePoint;
-    [SerializeField] private float firePower = 30f;
+    [SerializeField] private float firePower = 70f;
 
 
 
@@ -66,37 +66,41 @@ public class String : MonoBehaviour
     }
     private void OnReleased(SelectExitEventArgs args) //발사 함수
     {
-        if (currentPullAmount >= minPullToFire && GameManager.instance.isLoaded)
+        if (currentPullAmount >= minPullToFire && GameManager.instance.isLoaded)  //minPullToFire 만큼 당겨야 발동
         {
             GameManager.instance.ArrowFired();
             Fire();
             Debug.Log("화살 발사");
            
         }
-
+    
         pullingPoint.localPosition = defaultPullingPosition;
         pullingPointFollower.localPosition = defaultPullingFollowerPosition;
-
+    
         currentPullAmount = 0f;
     }
 
+
+
     private void Fire()
     {
-
-       GameObject arrowObj = ObjectPoolManager.instance.GetFromPool();  //풀에서 화살 가져옴
+    
+       GameObject arrowObj = ObjectPoolManager.instance.GetFireArrow();  //풀에서 화살 가져옴
+    
        Arrow arrow = arrowObj.GetComponent<Arrow>();
-      
+       Rigidbody rigid = arrow.GetComponent<Rigidbody>();
+       
+    
        arrow.transform.position = firePoint.position;  //firePoint 위치에서 발사
        arrow.transform.rotation = firePoint.rotation;
-      
-       Rigidbody rigid = arrow.GetComponent<Rigidbody>();
-        rigid.isKinematic = false;
+     //ObjectPoolManager.instance.ArrowReset(arrowObj);
+    
+    
        rigid.velocity = firePoint.forward * (currentPullAmount * firePower) ;  // 당겨진양 * 파워
-
-
-        Debug.Log("화살 발사");
+     //rigid.AddForce(firePoint.forward * (currentPullAmount * firePower), ForceMode.Impulse);
+       Debug.Log("화살 발사");
+    
+    
     }
-
-
 
 }

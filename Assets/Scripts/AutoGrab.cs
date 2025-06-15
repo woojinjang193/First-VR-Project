@@ -62,12 +62,8 @@ public class AutoGrab : MonoBehaviour
               //Debug.Log("장전!");
               GameManager.instance.ArrowLoad();
 
-              //arrow.gameObject.SetActive(false);
-              arrow.ArrowReturnPool();
-
-
-
-
+              //arrow.gameObject.SetActive(false);   // 화살 비활성화 
+              arrow.ArrowReturnPool(); //리턴
 
             if (currentInteractor != null && pullingPointGrab != null)
               {
@@ -77,15 +73,14 @@ public class AutoGrab : MonoBehaviour
     
               canReloadAgain = false;
               
-              Invoke("ReloadTimming", 0.9f);
-          }
+              Invoke("ReloadTimming", 0.9f); // isloaded가 바로 트루가 되어서 바로 또 손에 잡혀서 딜레이 시간추가
+        }
       }
 
-    private void ReloadTimming() // 발사가능시간 딜레이
+    private void ReloadTimming() 
     {
         canReloadAgain = true;
         
     }
-
 
 }

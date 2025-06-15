@@ -20,11 +20,17 @@ public class Arrow : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log($"충돌한 태그: {collision.collider.tag}");
-   
+        Debug.Log($"[충돌] {collision.gameObject.name}");////////////////////////////////////////////
+
         if (collision.collider.CompareTag("Monster") || collision.collider.CompareTag("GameOBJ"))
         {
-            rigid.isKinematic = true;
+            rigid.isKinematic = true;  //충돌시 멈춤
+            //rigid.velocity = Vector3.zero;
+
+            transform.SetParent(collision.transform, worldPositionStays: true);// 충돌한물체를 부모로 설정, 월드스케일 유지 (화살이 붙어있게 하기위함)
+
+            // transform.SetParent(collision.transform);  // 충돌한물체를 부모로 설정 (화살이 붙어있게 하기위함)
+            // transform.localScale = new Vector3(1f, 1f, 1f); //크기 고정
             Invoke("ArrowReturnPool", returnTime);
    
         }
@@ -34,17 +40,6 @@ public class Arrow : MonoBehaviour
         }
    
     }
-
-    // private void Update()
-    // {
-    //  
-    //       if (GameManager.instance.isLoaded)
-    //      {
-    //          Debug.Log("장전완료 리턴함");
-    //          ArrowReturnPool();
-    //          
-    //      }
-    // }
 
     private void Update()
     {
@@ -56,18 +51,33 @@ public class Arrow : MonoBehaviour
 
     public void ArrowReturnPool()
     {
-        if (isReturned)
+        if (isReturned)  //중복리턴 방지
         {
             Debug.Log("리턴됨");
             return;
-            
         }
-            isReturned = true;
-            ObjectPoolManager.instance.ReturnToPool(this.gameObject);
-            Debug.Log("풀로 리턴됨");
+
+        isReturned = true;
+        
+
+        if (CompareTag("FireArrow"))  //발사용이면 발사용 풀로 리턴
+        {
+            ObjectPoolManager.instance.ArrowReset(this.gameObject);
+            ObjectPoolManager.instance.ReturnFireArrow(this.gameObject);
+            Debug.Log("발사용 풀로 리턴됨");
+        }
+        else if (CompareTag("LoadArrow")) //장전용이면 발사용 풀로 리턴
+        {
+            ObjectPoolManager.instance.ArrowReset(this.gameObject);
+            ObjectPoolManager.instance.ReturnReloadArrow(this.gameObject);
+            Debug.Log("장전용 풀로 리턴됨");
+        }
+
+        
     }
 
-    //화살 자연스럽게 날아가게하기
+
+
 
 
 }
