@@ -17,6 +17,7 @@ TagManager:
   - LoadArrowTip
   - CastleGate
   - FireArrowTip
+  - ArrowTip
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - UI
   - Player
   - GameOBJ
-  - 
+  - Teleport
   - 
   - 
   - 

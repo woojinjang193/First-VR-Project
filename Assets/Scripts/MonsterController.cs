@@ -22,6 +22,7 @@ public class MonsterController : MonoBehaviour
     private bool hasReachedToGate = false;
     private bool hasFoundPlayer = false;
     private bool hasAttacked = false;
+    private bool hasDamaged = false;
 
     private Transform currentTarget;
 
@@ -98,9 +99,8 @@ public class MonsterController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
 
-        if (other.CompareTag("CastleGate"))
+        if (other.CompareTag("CastleGate") && !hasReachedToGate)
         {
             Debug.Log("성문 도착 내브메쉬 멈춤");
             hasReachedToGate = true;
@@ -110,28 +110,54 @@ public class MonsterController : MonoBehaviour
 
         if (other.CompareTag("FireArrowTip"))
         {
-            curHp -= takeDamage;
-            //Debug.Log("몬스터 체력:" + curHp);
-
-
-            if (curHp <= 0)
+            if (!hasDamaged)
             {
-                MonsterDie();
+                curHp -= takeDamage;
+                //Debug.Log("FireArrow 충돌:" + other.name);
+                Debug.Log("몬스터 체력:" + curHp);
+                hasDamaged = true;
+                Invoke("MonsterDamageDelay", 0.5f);
+
+                if (curHp <= 0)
+                {
+                    Debug.Log("쥬금");
+                    MonsterDie();
+                }
             }
+            else
+            {
+                return;
+            }
+
         }
 
-        if (other.CompareTag("LoadArrowTip")) //두번호출되는 이유 찾아야함
+        if (other.CompareTag("LoadArrowTip"))
         {
-            curHp -= 1;
-            //Debug.Log("충돌:" + other.name);
-            //Debug.Log("몬스터 체력:" + curHp);  
-
-            if (curHp <= 0)
+            if (!hasDamaged)
             {
-                MonsterDie();
+                curHp -= takeDamage;
+                //Debug.Log("FireArrow 충돌:" + other.name);
+                Debug.Log("몬스터 체력:" + curHp);
+                hasDamaged = true;
+                Invoke("MonsterDamageDelay", 0.5f);
+
+                if (curHp <= 0)
+                {
+                    Debug.Log("쥬금");
+                    MonsterDie();
+                }
+            }
+            else
+            {
+                return;
             }
         }
-        
+
+    }
+
+    private void MonsterDamageDelay()
+    {
+        hasDamaged = false;
     }
 
     public void MonsterHit()  //애니메이션 이벤트로 실행
@@ -140,12 +166,12 @@ public class MonsterController : MonoBehaviour
 
         if (currentTarget.CompareTag("Player"))
         {
-            Debug.Log("플레이어에게 데미지!");
+            //Debug.Log("플레이어에게 데미지!");
             
         }
         else if (currentTarget.CompareTag("CastleGate"))
         {
-            Debug.Log("성문에게 데미지!");
+            //Debug.Log("성문에게 데미지!");
 
         }
 

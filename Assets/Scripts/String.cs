@@ -70,7 +70,7 @@ public class String : MonoBehaviour
         {
             GameManager.instance.ArrowFired();
             Fire();
-            //Debug.Log("화살 발사");
+            Debug.Log("화살 발사");
            
         }
     

@@ -62,14 +62,14 @@ public class ObjectPoolManager : MonoBehaviour
     // 사용
     private void OnTakeFromPool(GameObject poolGo)
     {
+        ArrowReset(poolGo);
         poolGo.SetActive(true);
-        //ArrowReset(poolGo);
     }
     
     // 반환
     private void OnReturnedToPool(GameObject poolGo)
     {
-        //ArrowReset(poolGo);
+        ArrowReset(poolGo);
         poolGo.SetActive(false);
     }
     
@@ -111,12 +111,18 @@ public class ObjectPoolManager : MonoBehaviour
        rigid.isKinematic = false; // 기네마틱 끔
        rigid.velocity = Vector3.zero; //이동 속도 초기화
        rigid.angularVelocity = Vector3.zero; // 회전 속도 초기화
-        Collider arrowCollider = arrow.GetComponent<Collider>();
-        arrowCollider.enabled = true; // 콜라이더 다시 켜줌
-   
-        Debug.Log($"화살 초기화 완료");
-   
-   
-   }
+
+        foreach (Collider collider in arrow.GetComponentsInChildren<Collider>())
+        {
+            collider.enabled = true;
+        }
+
+        //Collider arrowCollider = arrow.GetComponent<Collider>();
+        //arrowCollider.enabled = true; // 콜라이더 다시 켜줌
+
+        //Debug.Log($"화살 초기화 완료");
+
+
+    }
 
 }

@@ -4,10 +4,25 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager instance;
+
     [SerializeField] private GameObject[] waves; // 웨이브목록
     private int currentWave = 0;
     private bool isWaveStarted = false;
     [SerializeField] private float waveStartDelay = 10f;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Update()
     {
