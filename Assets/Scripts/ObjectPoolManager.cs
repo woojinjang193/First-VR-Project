@@ -104,13 +104,16 @@ public class ObjectPoolManager : MonoBehaviour
    {
        if (arrow == null) return;
    
-       arrow.transform.SetParent(null);  //부모 해제
-       arrow.transform.localScale = Vector3.one;  // 스케일 초기화
-       arrow.transform.localRotation = Quaternion.identity;
-       Rigidbody rigid = arrow.GetComponent<Rigidbody>();
-       rigid.isKinematic = false; // 기네마틱 끔
-       rigid.velocity = Vector3.zero; //이동 속도 초기화
-       rigid.angularVelocity = Vector3.zero; // 회전 속도 초기화
+        arrow.transform.SetParent(null);  //부모 해제
+        arrow.transform.localScale = Vector3.one;  // 스케일 초기화
+        arrow.transform.localRotation = Quaternion.identity;
+        Rigidbody rigid = arrow.GetComponent<Rigidbody>();
+        rigid.isKinematic = false; // 기네마틱 끔
+        rigid.velocity = Vector3.zero; //이동 속도 초기화
+        rigid.angularVelocity = Vector3.zero; // 회전 속도 초기화
+
+        TrailRenderer trail = arrow.GetComponent<TrailRenderer>();
+        trail.emitting = true;  //테일렌더 다시켜줌 
 
         foreach (Collider collider in arrow.GetComponentsInChildren<Collider>())
         {

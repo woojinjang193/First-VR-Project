@@ -9,7 +9,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private GameObject[] waves; // 웨이브목록
     private int currentWave = 0;
     private bool isWaveStarted = false;
-    [SerializeField] private float waveStartDelay = 10f;
+    [SerializeField] private float waveStartDelay = 6f;
 
     private void Awake()
     {
@@ -52,6 +52,7 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
+        AudioManager.instance.PlayBgm();
         waves[currentWave].SetActive(true);  //현재 웨이브 오브젝트 활성화 0이 웨이브 1임
         isWaveStarted = true;
         Debug.Log("웨이브" + (currentWave + 1) + "시작");
@@ -76,4 +77,10 @@ public class WaveManager : MonoBehaviour
 
         return true;  //몬스터가 전부 비활성화면 true
     }
+
+    public void WaveStartRequest()
+    {
+        Invoke("StartWave", 5f);
+    }
+
 }

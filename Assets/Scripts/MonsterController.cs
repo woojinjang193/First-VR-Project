@@ -106,6 +106,8 @@ public class MonsterController : MonoBehaviour
         if(GameManager.instance.isGameOver)
         {
             animator.SetBool("GameOver", true);
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
         }
     }
 

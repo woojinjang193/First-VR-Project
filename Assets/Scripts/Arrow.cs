@@ -12,6 +12,7 @@ public class Arrow : MonoBehaviour
     [SerializeField] Rigidbody rigid;
     [SerializeField]  private float returnTime = 5f;
     //public bool isFired = false;
+    [SerializeField] private TrailRenderer trail;
 
     [SerializeField] private AudioSource audioSource;
     private bool hasHit = false;
@@ -38,6 +39,7 @@ public class Arrow : MonoBehaviour
             audioSource.Play();
     
             rigid.isKinematic = true;  //Ãæµ¹½Ã ¸ØÃã
+            trail.emitting = false; //Å×ÀÏ·»´õ ²û
             //ArrowColliderFalse();
             Invoke("ArrowColliderFalse",0.2f);
 

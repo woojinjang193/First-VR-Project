@@ -280,6 +280,9 @@ MonoBehaviour:
   attackDamage: 15
   takeDamage: 5
   attackDelay: 2
+  audioSource: {fileID: -6671023400567590168}
+  attackSound: {fileID: 8300000, guid: dc7864670a70fb8459bc903e8e7b2c35, type: 3}
+  deathSound: {fileID: 8300000, guid: 4283a144b1cb15841a15b621533a5395, type: 3}
 --- !u!82 &-6671023400567590168
 AudioSource:
   m_ObjectHideFlags: 0
@@ -292,7 +295,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 5db53fcc87918524fb65695eca457dec, type: 2}
   m_audioClip: {fileID: 8300000, guid: dc7864670a70fb8459bc903e8e7b2c35, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -336,7 +339,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
