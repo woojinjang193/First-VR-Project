@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject ArrowNoCollider;
     public bool isLoaded;
+    public bool isGameOver;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         isLoaded = false;
+        isGameOver = false;
     }
 
     public void ArrowLoad()
@@ -37,4 +39,10 @@ public class GameManager : MonoBehaviour
          ArrowNoCollider.SetActive(false);
          isLoaded = false;
      }
+
+    public void GameOver()
+    {
+        Debug.Log("게임오버");
+        isGameOver = true;
+    }
 }

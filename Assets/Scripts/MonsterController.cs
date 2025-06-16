@@ -15,8 +15,15 @@ public class MonsterController : MonoBehaviour
 
     [SerializeField] private int maxHp;
     private int curHp;
+    [SerializeField] int attackDamage;
     [SerializeField] private int takeDamage;
     [SerializeField] private float attackDelay;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip deathSound;
+
+
     private bool isDead = false;
 
     private bool hasReachedToGate = false;
@@ -42,7 +49,7 @@ public class MonsterController : MonoBehaviour
 
     private void Update()
     {
-        if(!hasReachedToGate && !isDead)  //성문 도달하기 전이나 죽지않았을때
+        if(!hasReachedToGate && !isDead && !GameManager.instance.isGameOver)  //성문 도달하기 전이나 죽지않았거나 게임오버가 아닐때
         {
             
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);  //플레이어와 거리 계산
@@ -85,7 +92,7 @@ public class MonsterController : MonoBehaviour
                 }
             }
 
-        if (hasReachedToGate)  //성문도달했을때
+        else  //성문도달했을때
         {
             if (!hasAttacked)
             {
@@ -94,6 +101,11 @@ public class MonsterController : MonoBehaviour
                 hasAttacked = true;
                 Invoke("AttackCoolDown", attackDelay);
             }
+        }
+
+        if(GameManager.instance.isGameOver)
+        {
+            animator.SetBool("GameOver", true);
         }
     }
 
@@ -112,17 +124,25 @@ public class MonsterController : MonoBehaviour
         {
             if (!hasDamaged)
             {
+                
                 curHp -= takeDamage;
                 //Debug.Log("FireArrow 충돌:" + other.name);
                 Debug.Log("몬스터 체력:" + curHp);
                 hasDamaged = true;
-                Invoke("MonsterDamageDelay", 0.5f);
+                Invoke("MonsterDamageDelay", 1f); //몬스터 데미지 받는 딜레이 시간
 
                 if (curHp <= 0)
                 {
                     Debug.Log("쥬금");
                     MonsterDie();
                 }
+                else
+                {
+                    animator.SetTrigger("GetDamaged");
+                }
+                
+
+
             }
             else
             {
@@ -160,23 +180,31 @@ public class MonsterController : MonoBehaviour
         hasDamaged = false;
     }
 
-    public void MonsterHit()  //애니메이션 이벤트로 실행
-    {
-        //if (currentTarget == null) return;
-
-        if (currentTarget.CompareTag("Player"))
+   public void MonsterHit()  //애니메이션 이벤트로 실행
+   {
+        if (currentTarget == null)
         {
-            //Debug.Log("플레이어에게 데미지!");
+            return;
+        }
+
+        audioSource.clip = attackSound;
+        audioSource.Play();
+
+        if (currentTarget.CompareTag("Player"))  //현재 타겟이 플레이어면
+       {
+            currentTarget.GetComponent<PlayerStatus>().TakeDamage(attackDamage);  //PlayerStatus에서 TakeDamage호출 
             
+            //Debug.Log("플레이어에게 데미지!");
         }
         else if (currentTarget.CompareTag("CastleGate"))
-        {
+       {
             //Debug.Log("성문에게 데미지!");
-
+            currentTarget.GetComponent<CastleGateStatus>().TakeDamage(attackDamage); //위랑 같은 로직
+            
         }
-
-        currentTarget = null; // 공격 종료 후 초기화
-    }
+   
+       currentTarget = null; // 공격 종료 후 초기화
+   }
 
 
     private void AttackCoolDown()
@@ -188,6 +216,9 @@ public class MonsterController : MonoBehaviour
     {
         isDead = true;
         //Debug.Log("몬스터쥬금");
+        audioSource.clip = deathSound; //죽는소리 출력
+        audioSource.Play();
+
         animator.SetTrigger("Die");  //죽는 모션
         agent.isStopped = true;
         agent.velocity = Vector3.zero;

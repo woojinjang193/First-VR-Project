@@ -402,6 +402,7 @@ MonoBehaviour:
   player: {fileID: 0}
   detectionRange: 15
   maxHp: 20
+  attackDamage: 20
   takeDamage: 4
   attackDelay: 2
 --- !u!1 &2635377937144269504
