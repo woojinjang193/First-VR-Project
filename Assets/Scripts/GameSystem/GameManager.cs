@@ -16,8 +16,15 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject particleBox;
 
+    [SerializeField] private PlayerStatus playerStatus;
+    [SerializeField] private CastleGateStatus castleGateStatus;
+
+    [SerializeField] private int playerHealAmount;
+    [SerializeField] private int castleHealAmount;
+
     public bool isLoaded;
     public bool isGameOver;
+    public bool isGameClear;
 
     private void Awake()
     {
@@ -32,6 +39,7 @@ public class GameManager : MonoBehaviour
     {
         isLoaded = false;
         isGameOver = false;
+        isGameClear = false;
         player.transform.position = startPoint.position;
         player.transform.rotation = startPoint.rotation;
     }
@@ -64,10 +72,22 @@ public class GameManager : MonoBehaviour
     {
         gameClearUI.SetActive(true);
         particleBox.SetActive(true);
+        isGameClear = true;
+
         //foreach (Transform child in particleBox.transform)  //축하 파티클 재생
         //{
         //    ParticleSystem particle = child.GetComponent<ParticleSystem>(); //자식들의 파티클 전부 실행
         //    particle.Play();
         //}
+    }
+
+    public void PlayerHeal()
+    {
+        playerStatus.PlayerHeal(playerHealAmount);
+    }
+
+    public void CastleHeal()
+    {
+        castleGateStatus.CastleHeal(castleHealAmount);
     }
 }
