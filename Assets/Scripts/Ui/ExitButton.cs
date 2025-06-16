@@ -7,7 +7,7 @@ public class ExitButton : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Application.Quit();
+        Application.Quit();
         Debug.Log("게임종료");
     }
 }
