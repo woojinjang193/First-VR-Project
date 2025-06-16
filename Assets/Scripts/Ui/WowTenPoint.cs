@@ -8,6 +8,12 @@ public class WowTenPoint : MonoBehaviour
     [SerializeField] GameObject tenPointParticle;
     private void OnTriggerEnter(Collider other)
     {
-        Instantiate(tenPointParticle, transform.position, transform.rotation);
+        tenPointParticle.SetActive(true);
+        Invoke("ParticleFalse", 2f);
+    }
+
+    private void ParticleFalse()
+    {
+        tenPointParticle.SetActive(false);
     }
 }
