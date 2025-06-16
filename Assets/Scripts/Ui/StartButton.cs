@@ -10,5 +10,8 @@ public class StartButton : MonoBehaviour
     {
         WaveManager.instance.WaveStartRequest();
         startUiOBJ.SetActive(false);
+        Debug.Log("게임시작");
+
+        
     }
 }

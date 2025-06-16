@@ -7,21 +7,30 @@ public class WaveManager : MonoBehaviour
     public static WaveManager instance;
 
     [SerializeField] private GameObject[] waves; // 웨이브목록
-    private int currentWave = 0;
-    private bool isWaveStarted = false;
     [SerializeField] private float waveStartDelay = 6f;
+
+    AudioSource audioSorce;
+
+    private int currentWave = 0; 
+    private bool isWaveStarted = false;
+
+    public int clearedWave => currentWave;  // 외부읽기전용
 
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        audioSorce = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -80,7 +89,8 @@ public class WaveManager : MonoBehaviour
 
     public void WaveStartRequest()
     {
-        Invoke("StartWave", 5f);
+        audioSorce.Play();
+        Invoke("StartWave", 3f);
     }
 
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,11 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] GameObject ArrowNoCollider;
+    [SerializeField] GameObject gameOverUI;
+    [SerializeField] GameOverUI gameOverResult;
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform startPoint;
+
     public bool isLoaded;
     public bool isGameOver;
 
@@ -23,6 +29,8 @@ public class GameManager : MonoBehaviour
     {
         isLoaded = false;
         isGameOver = false;
+        player.transform.position = startPoint.position;
+        player.transform.rotation = startPoint.rotation;
     }
 
     public void ArrowLoad()
@@ -44,5 +52,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("게임오버");
         isGameOver = true;
+        gameOverUI.SetActive(true);
+        gameOverResult.GameOverResult();
+
     }
 }

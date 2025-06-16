@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-
+using UnityEngine.UI;
 public class MonsterController : MonoBehaviour
 {
     private NavMeshAgent agent;
@@ -22,6 +21,8 @@ public class MonsterController : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip deathSound;
+
+    [SerializeField] private Slider hpBar;
 
 
     private bool isDead = false;
@@ -45,6 +46,8 @@ public class MonsterController : MonoBehaviour
     {
         curHp = maxHp;
         animator = GetComponent<Animator>();
+        hpBar.maxValue = maxHp;
+        hpBar.value = curHp;
     }
 
     private void Update()
@@ -128,10 +131,11 @@ public class MonsterController : MonoBehaviour
             {
                 
                 curHp -= takeDamage;
+                hpBar.value = curHp;
                 //Debug.Log("FireArrow 충돌:" + other.name);
                 Debug.Log("몬스터 체력:" + curHp);
                 hasDamaged = true;
-                Invoke("MonsterDamageDelay", 1f); //몬스터 데미지 받는 딜레이 시간
+                Invoke("MonsterDamageDelay", 0.5f); //몬스터 데미지 받는 딜레이 시간  0.2보다 높게 설정해야함
 
                 if (curHp <= 0)
                 {
@@ -158,6 +162,7 @@ public class MonsterController : MonoBehaviour
             if (!hasDamaged)
             {
                 curHp -= takeDamage;
+                hpBar.value = curHp;
                 //Debug.Log("FireArrow 충돌:" + other.name);
                 Debug.Log("몬스터 체력:" + curHp);
                 hasDamaged = true;
