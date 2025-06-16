@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Controller
+  - Arrow
+  - PullingPoint
+  - ArrowNoColider
+  - ArrowButtom
+  - PlayerHand
+  - GameOBJ
+  - Monster
+  - FireArrow
+  - LoadArrow
+  - LoadArrowTip
+  - CastleGate
+  - FireArrowTip
+  - ArrowTip
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Arrow
+  - Water
+  - UI
+  - Player
+  - GameOBJ
+  - Teleport
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
