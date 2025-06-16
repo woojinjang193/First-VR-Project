@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
     public float sfxMasterVolume = 1f;
    
     public enum Sfx {Teleport, ArrowTaking, ArrowLoading, StringPulling, Shoot, ArrowHit, MonsterDie, MonsterAttack, Button, GateGetDamaged, GateBrokeDown}
-
+                                 //완            //완        //뺄지도     //완   //3D완
     private void Awake()
     {
         if (instance == null)
