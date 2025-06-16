@@ -57,7 +57,8 @@ public class WaveManager : MonoBehaviour
     {
         if (currentWave >= waves.Length)
         {
-            Debug.Log("게임 클리어");
+            GameManager.instance.GameClear();
+            Debug.Log("게임 클리어"); 
             return;
         }
 

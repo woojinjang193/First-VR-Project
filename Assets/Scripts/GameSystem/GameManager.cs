@@ -10,8 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject ArrowNoCollider;
     [SerializeField] GameObject gameOverUI;
     [SerializeField] GameOverUI gameOverResult;
+    [SerializeField] GameObject gameClearUI;
     [SerializeField] private Transform player;
     [SerializeField] private Transform startPoint;
+
+    [SerializeField] private GameObject particleBox;
 
     public bool isLoaded;
     public bool isGameOver;
@@ -55,5 +58,16 @@ public class GameManager : MonoBehaviour
         gameOverUI.SetActive(true);
         gameOverResult.GameOverResult();
 
+    }
+
+    public void GameClear()
+    {
+        gameClearUI.SetActive(true);
+        particleBox.SetActive(true);
+        //foreach (Transform child in particleBox.transform)  //축하 파티클 재생
+        //{
+        //    ParticleSystem particle = child.GetComponent<ParticleSystem>(); //자식들의 파티클 전부 실행
+        //    particle.Play();
+        //}
     }
 }

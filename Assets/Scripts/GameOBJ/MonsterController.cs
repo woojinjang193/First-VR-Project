@@ -129,7 +129,6 @@ public class MonsterController : MonoBehaviour
         {
             if (!hasDamaged)
             {
-                
                 curHp -= takeDamage;
                 hpBar.value = curHp;
                 //Debug.Log("FireArrow Ãæµ¹:" + other.name);
@@ -146,15 +145,11 @@ public class MonsterController : MonoBehaviour
                 {
                     animator.SetTrigger("GetDamaged");
                 }
-                
-
-
             }
             else
             {
                 return;
             }
-
         }
 
         if (other.CompareTag("LoadArrowTip"))
