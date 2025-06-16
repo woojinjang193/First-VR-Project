@@ -34,6 +34,18 @@ public class PlayerStatus : MonoBehaviour
         Debug.Log("플레이어 사망");
         GameManager.instance.GameOver();
     }
+    public void PlayerHeal(int amount)
+    {
+        if (curHP >= maxHP)
+        {
+            return;
+        }
+        else
+        {
+            curHP += amount;
+            hpBar.value = curHP;
+        }
+    }
 
 
 

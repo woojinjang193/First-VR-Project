@@ -62,4 +62,17 @@ public class CastleGateStatus : MonoBehaviour
         GameManager.instance.GameOver();
     }
 
+    public void CastleHeal(int amount)
+    {
+        if (curHP >= maxHP)
+        {
+            return;
+        }
+        else
+        {
+            curHP += amount;
+            hpBar.value = curHP;
+        }
+        Debug.Log("힐!!!!!! 성문 체력: " + curHP);
+    }
 }

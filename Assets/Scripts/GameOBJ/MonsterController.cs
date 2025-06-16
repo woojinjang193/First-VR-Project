@@ -119,7 +119,7 @@ public class MonsterController : MonoBehaviour
 
         if (other.CompareTag("CastleGate") && !hasReachedToGate)
         {
-            Debug.Log("º∫πÆ µµ¬¯ ≥ª∫Í∏ﬁΩ¨ ∏ÿ√„");
+            //Debug.Log("º∫πÆ µµ¬¯ ≥ª∫Í∏ﬁΩ¨ ∏ÿ√„");
             hasReachedToGate = true;
             agent.isStopped = true;  //º∫πÆ µµ¥ﬁΩ√ ∏ÿ√„
             agent.velocity = Vector3.zero;

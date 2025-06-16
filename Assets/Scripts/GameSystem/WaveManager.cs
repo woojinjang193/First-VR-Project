@@ -13,6 +13,7 @@ public class WaveManager : MonoBehaviour
 
     private int currentWave = 0; 
     private bool isWaveStarted = false;
+    public bool isGameStarted = false;
 
     public int clearedWave => currentWave;  // 외부읽기전용
 
@@ -48,17 +49,21 @@ public class WaveManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("모든 웨이브 클리어!");
+                GameManager.instance.GameClear();
+                Debug.Log("게임 클리어");
             }
         }
     }
 
     public void StartWave() //웨이브 시작
     {
+        if (!isGameStarted)
+        {
+            isGameStarted = true;
+        }
+
         if (currentWave >= waves.Length)
         {
-            GameManager.instance.GameClear();
-            Debug.Log("게임 클리어"); 
             return;
         }
 
