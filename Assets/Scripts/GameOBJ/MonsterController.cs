@@ -127,54 +127,56 @@ public class MonsterController : MonoBehaviour
 
         if (other.CompareTag("FireArrowTip"))
         {
-            if (!hasDamaged)
+            if (!GameManager.instance.isGameOver)  //게임오버 아닐때만 몬스터 체력담
             {
-                curHp -= takeDamage;
-                hpBar.value = curHp;
-                //Debug.Log("FireArrow 충돌:" + other.name);
-                Debug.Log("몬스터 체력:" + curHp);
-                hasDamaged = true;
-                Invoke("MonsterDamageDelay", 0.5f); //몬스터 데미지 받는 딜레이 시간  0.2보다 높게 설정해야함
-
-                if (curHp <= 0)
+                if (!hasDamaged)
                 {
-                    Debug.Log("쥬금");
-                    MonsterDie();
+                    curHp -= takeDamage;
+                    hpBar.value = curHp;
+                    //Debug.Log("FireArrow 충돌:" + other.name);
+                    Debug.Log("몬스터 체력:" + curHp);
+                    hasDamaged = true;
+                    Invoke("MonsterDamageDelay", 0.5f); //몬스터 데미지 받는 딜레이 시간  0.2보다 높게 설정해야함
+
+                    if (curHp <= 0)
+                    {
+                        Debug.Log("쥬금");
+                        MonsterDie();
+                    }
+                    else
+                    {
+                        animator.SetTrigger("GetDamaged");
+                    }
                 }
                 else
                 {
-                    animator.SetTrigger("GetDamaged");
+                    return;
                 }
             }
-            else
-            {
-                return;
-            }
-        }
 
-        if (other.CompareTag("LoadArrowTip"))
-        {
-            if (!hasDamaged)
+            if (other.CompareTag("LoadArrowTip"))
             {
-                curHp -= takeDamage;
-                hpBar.value = curHp;
-                //Debug.Log("FireArrow 충돌:" + other.name);
-                Debug.Log("몬스터 체력:" + curHp);
-                hasDamaged = true;
-                Invoke("MonsterDamageDelay", 0.5f);
-
-                if (curHp <= 0)
+                if (!hasDamaged)
                 {
-                    Debug.Log("쥬금");
-                    MonsterDie();
+                    curHp -= takeDamage;
+                    hpBar.value = curHp;
+                    //Debug.Log("FireArrow 충돌:" + other.name);
+                    Debug.Log("몬스터 체력:" + curHp);
+                    hasDamaged = true;
+                    Invoke("MonsterDamageDelay", 0.5f);
+
+                    if (curHp <= 0)
+                    {
+                        Debug.Log("쥬금");
+                        MonsterDie();
+                    }
+                }
+                else
+                {
+                    return;
                 }
             }
-            else
-            {
-                return;
-            }
         }
-
     }
 
     private void MonsterDamageDelay()
