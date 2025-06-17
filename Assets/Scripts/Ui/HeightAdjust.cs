@@ -24,10 +24,10 @@ public class HeightAdjuster : MonoBehaviour
         Vector3 offset = _camera.localPosition;
 
         float newY = offset.y + change;
-        if (player.transform.position.y + newY >= minY && player.transform.position.y + newY <= maxY)
+        if (player.transform.position.y + newY >= minY && player.transform.position.y + newY <= maxY) //변화한 플레이어(카메라)의 높이가 미니멈Y보다 크고 맥시멈Y보다 작을때
         {
-            offset.y = newY;
-            _camera.localPosition = offset;
+            offset.y = newY; //변화된 값으로 적용
+            _camera.localPosition = offset; //변화한 값을 저장
         }
     }
 
