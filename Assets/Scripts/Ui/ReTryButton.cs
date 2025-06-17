@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class ReTryButton : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Scene currentScene = SceneManager.GetActiveScene();
+    //    SceneManager.LoadScene(currentScene.name);
+    //}
+
+    private void OnCollisionEnter(Collision collision)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
