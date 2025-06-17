@@ -7,26 +7,41 @@ using Unity.VisualScripting;
 public class HeightAdjuster : MonoBehaviour
 {
     [SerializeField] private float change = 0.1f;  //한번에 이동할 양
+    [SerializeField] private float minY = 9f;       // 최소높이
+    [SerializeField] private float maxY = 11f;      // 최대높이
+
     private XROrigin player;
+    private Transform _camera;
 
     void Start()
     {
         player = GetComponent<XROrigin>();
+        _camera = player.CameraFloorOffsetObject.transform;
     }
 
     public void UPButtonClick()  //올라감
     {
-        Vector3 height = player.transform.position; //플레이어 위치
-        height.y += change;
-        player.transform.position = height;
+        Vector3 offset = _camera.localPosition;
+
+        float newY = offset.y + change;
+        if (player.transform.position.y + newY >= minY && player.transform.position.y + newY <= maxY)
+        {
+            offset.y = newY;
+            _camera.localPosition = offset;
+        }
     }
 
     public void DownButtonClick() //내려감
     {
-        Vector3 height = player.transform.position;
-        height.y -= change;
-        player.transform.position = height;
+        Vector3 offset = _camera.localPosition;
+
+        float newY = offset.y - change;
+        if (player.transform.position.y + newY >= minY && player.transform.position.y + newY <= maxY)
+        {
+            offset.y = newY;
+            _camera.localPosition = offset;
+        }
     }
- 
+
 }
 

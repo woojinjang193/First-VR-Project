@@ -15177,6 +15177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   change: 0.1
+  minY: 8.5
+  maxY: 10
 --- !u!1001 &1457799033
 PrefabInstance:
   m_ObjectHideFlags: 0
