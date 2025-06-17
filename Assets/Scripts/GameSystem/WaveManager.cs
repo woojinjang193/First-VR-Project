@@ -11,9 +11,10 @@ public class WaveManager : MonoBehaviour
 
     AudioSource audioSorce;
 
-    private int currentWave = 0; 
+    private int currentWave = 0;
     private bool isWaveStarted = false;
     public bool isGameStarted = false;
+    private int remainingMonsters = 0;
 
     public int clearedWave => currentWave;  // 외부읽기전용
 
@@ -34,27 +35,6 @@ public class WaveManager : MonoBehaviour
         audioSorce = GetComponent<AudioSource>();
     }
 
-    void Update()
-    {
-        if (isWaveStarted && IsCurrentWaveCleared())  //웨이브가 끝났을때
-        {
-            Debug.Log("웨이브" + (currentWave + 1) + "클리어");
-            waves[currentWave].SetActive(false);  //종료된 웨이브오브젝트 비활성화
-            isWaveStarted = false;  //한번만 실행되게
-            currentWave++;
-
-            if (currentWave < waves.Length)
-            {
-                Invoke("StartNextWaveDelay", waveStartDelay);  //다음웨이브 시작전 딜레이
-            }
-            else
-            {
-                GameManager.instance.GameClear();
-                Debug.Log("게임 클리어");
-            }
-        }
-    }
-
     public void StartWave() //웨이브 시작
     {
         if (!isGameStarted)
@@ -67,30 +47,48 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        AudioManager.instance.PlayBgm();
+        AudioManager.instance.PlayBgm(); //bgm 시작
+
         waves[currentWave].SetActive(true);  //현재 웨이브 오브젝트 활성화 0이 웨이브 1임
         isWaveStarted = true;
         Debug.Log("웨이브" + (currentWave + 1) + "시작");
 
     }
 
-    private void StartNextWaveDelay()
+    public void RegisterMonster() //몬스터 생성시 호출 
     {
-        Debug.Log(waveStartDelay + "초 후 다음 웨이브 시작...");
-        StartWave();
+        remainingMonsters++;
+        Debug.Log("몬수터수: " + remainingMonsters);
     }
 
-    private bool IsCurrentWaveCleared() //웨이브 클리어 검사함수
+    public void OnMonsterDied() //몬스터 죽을때 호출
     {
-        GameObject currentWaveObj = waves[currentWave]; //현재 웨이브 오브젝트
+        remainingMonsters--;
+        Debug.Log("몬스터 남은수: " + remainingMonsters);
 
-        foreach (Transform child in currentWaveObj.transform) // 현재 웨이브 오브젝트를 검사해서 
+        if (remainingMonsters <= 0 && isWaveStarted)  // 몬스터 다 잡으면
         {
-            if (child.gameObject.activeSelf) //활성화된 몬스터가 있으면
-                return false; //false 반환
+            Debug.Log("웨이브" + (currentWave + 1) + "클리어");
+            isWaveStarted = false;
+            Debug.Log(waveStartDelay + "초 후 다음 웨이브 시작...");
+            Invoke("CurrentWaveFalse", waveStartDelay); //몬스터가 완전히 사라지기 전까지 비활성화 안하기
         }
+    }
 
-        return true;  //몬스터가 전부 비활성화면 true
+    private void CurrentWaveFalse()
+    {
+        waves[currentWave].SetActive(false); // 현재웨이브 비활성화
+        currentWave++;
+
+        if (currentWave < waves.Length) //게임 아직 클리어전이면
+        {
+            StartWave();
+        }
+        else // 웨이브수랑 같거나 커지면
+        {
+            GameManager.instance.GameClear();
+            Debug.Log("게임 클리어");
+        }
     }
 
     public void WaveStartRequest()

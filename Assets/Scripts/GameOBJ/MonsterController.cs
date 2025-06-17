@@ -31,6 +31,7 @@ public class MonsterController : MonoBehaviour
     private bool hasFoundPlayer = false;
     private bool hasAttacked = false;
     private bool hasDamaged = false;
+    private bool gameOverAnimationPlayed = false;
 
     private Transform currentTarget;
 
@@ -40,6 +41,8 @@ public class MonsterController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(castleGate.position);
+
+        
     }
 
     private void Start()
@@ -48,6 +51,8 @@ public class MonsterController : MonoBehaviour
         animator = GetComponent<Animator>();
         hpBar.maxValue = maxHp;
         hpBar.value = curHp;
+
+        WaveManager.instance.RegisterMonster(); //몬스터가 활성화 되면서 웨이브 매니저한테 알려줌
     }
 
     private void Update()
@@ -108,9 +113,17 @@ public class MonsterController : MonoBehaviour
 
         if(GameManager.instance.isGameOver)
         {
-            animator.SetBool("GameOver", true);
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
+            if (!gameOverAnimationPlayed)
+            {
+                gameOverAnimationPlayed = true;
+                animator.SetBool("GameOver", true);
+                agent.isStopped = true;
+                agent.velocity = Vector3.zero;
+            }
+            else
+            {
+                return;
+            }    
         }
     }
 
@@ -134,13 +147,13 @@ public class MonsterController : MonoBehaviour
                     curHp -= takeDamage;
                     hpBar.value = curHp;
                     //Debug.Log("FireArrow 충돌:" + other.name);
-                    Debug.Log("몬스터 체력:" + curHp);
+                    //Debug.Log("몬스터 체력:" + curHp);
                     hasDamaged = true;
                     Invoke("MonsterDamageDelay", 0.5f); //몬스터 데미지 받는 딜레이 시간  0.2보다 높게 설정해야함
 
                     if (curHp <= 0)
                     {
-                        Debug.Log("쥬금");
+                        //Debug.Log("쥬금");
                         MonsterDie();
                     }
                     else
@@ -153,29 +166,33 @@ public class MonsterController : MonoBehaviour
                     return;
                 }
             }
+        }
 
-            if (other.CompareTag("LoadArrowTip"))
-            {
+        if (other.CompareTag("LoadArrowTip"))
+        {
+            if (!GameManager.instance.isGameOver)  //게임오버 아닐때만 몬스터 체력담
+            { 
                 if (!hasDamaged)
-                {
-                    curHp -= takeDamage;
-                    hpBar.value = curHp;
-                    //Debug.Log("FireArrow 충돌:" + other.name);
-                    Debug.Log("몬스터 체력:" + curHp);
-                    hasDamaged = true;
-                    Invoke("MonsterDamageDelay", 0.5f);
+            {
+                curHp -= 1;
+                hpBar.value = curHp;
+                Debug.Log("LoadArrowTip 충돌:" + other.name);
+                //Debug.Log("몬스터 체력:" + curHp);
+                hasDamaged = true;
+                Invoke("MonsterDamageDelay", 0.5f);
 
-                    if (curHp <= 0)
-                    {
-                        Debug.Log("쥬금");
-                        MonsterDie();
-                    }
-                }
-                else
+                if (curHp <= 0)
                 {
-                    return;
+                    //Debug.Log("쥬금");
+                    MonsterDie();
                 }
             }
+            else
+            {
+                return;
+            }
+            }
+
         }
     }
 
@@ -219,18 +236,23 @@ public class MonsterController : MonoBehaviour
     private void MonsterDie()
     {
         isDead = true;
+        
         //Debug.Log("몬스터쥬금");
         audioSource.clip = deathSound; //죽는소리 출력
         audioSource.Play();
 
         animator.SetTrigger("Die");  //죽는 모션
+
         agent.isStopped = true;
         agent.velocity = Vector3.zero;
+      
 
         foreach (Collider collider in GetComponentsInChildren<Collider>())  //몬스터안의 콜라이더를 모두 찾음
         {
             collider.enabled = false;  //죽은후 충돌안되게 콜라이더 비활성화
         }
+
+        WaveManager.instance.OnMonsterDied(); //몬스터 사망 알려줌
 
         Invoke("MonsterBodyFalse", 5f);
     }
